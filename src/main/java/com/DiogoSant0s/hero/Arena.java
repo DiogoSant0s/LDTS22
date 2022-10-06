@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arena {
-    private List<Wall> walls;
-    private int width;
-    private int height;
-    private Hero hero;
+    private final List<Wall> walls;
+    private final int width;
+    private final int height;
+    private final Hero hero;
 
     public Arena(int width, int height) {
         this.width = width;
@@ -51,6 +51,10 @@ public class Arena {
         if (key.getKeyType() == KeyType.ArrowDown) moveHero(hero.moveDown());
         if (key.getKeyType() == KeyType.ArrowRight) moveHero(hero.moveRight());
         if (key.getKeyType() == KeyType.ArrowLeft) moveHero(hero.moveLeft());
+        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'w') moveHero(hero.moveUp());
+        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 's') moveHero(hero.moveDown());
+        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'd') moveHero(hero.moveRight());
+        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'a') moveHero(hero.moveLeft());
     }
 
     public void draw(TextGraphics graphics) {
@@ -59,5 +63,9 @@ public class Arena {
         for (Wall wall : walls)
             wall.draw(graphics);
         hero.draw(graphics);
+    }
+
+    public void reset() {
+        
     }
 }
