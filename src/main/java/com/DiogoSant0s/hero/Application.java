@@ -1,3 +1,5 @@
+package com.DiogoSant0s.hero;
+
 import java.io.IOException;
 
 public class Application {
