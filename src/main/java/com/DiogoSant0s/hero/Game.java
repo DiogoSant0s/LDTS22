@@ -13,14 +13,16 @@ import java.io.IOException;
 public class Game {
     private Screen screen;
     private Arena arena;
+    private TextGraphics graphics;
+
     public Game() {
         try {
-            arena = new Arena(75, 25);
-            TerminalSize terminalSize = new TerminalSize(75, 25);
+            arena = new Arena(80, 30);
+            TerminalSize terminalSize = new TerminalSize(80, 30);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
             screen = new TerminalScreen(terminal);
-            TextGraphics graphics = screen.newTextGraphics();
+            graphics = screen.newTextGraphics();
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
@@ -28,32 +30,32 @@ public class Game {
             e.printStackTrace();
         }
     }
+
     private void draw() throws IOException {
         screen.clear();
-        arena.draw(screen.newTextGraphics());
+        arena.draw(graphics);
         screen.refresh();
     }
+
     private void processKey(KeyStroke key) {
         arena.processKey(key);
     }
+
     public void run() throws IOException {
         while (true) {
             draw();
             KeyStroke key = screen.readInput();
             processKey(key);
             switch (key.getKeyType()) {
-                case Character:
+                case Character -> {
                     char character = key.getCharacter();
                     if (character == 'q' || character == 'Q') screen.close();
-                    else if((character == 'R' || character == 'r')) {
-                        arena.reset();
-                    }
-                    break;
-                case EOF:
-                    break;
-                default:
-                    arena.processKey(key);
-                    break;
+                    if ((character == 'R' || character == 'r')) arena.reset();
+                }
+                case Escape -> screen.close();
+                default -> arena.processKey(key);
+            }
+            if (key.getKeyType() == KeyType.EOF) break;
         }
     }
 }
