@@ -17,8 +17,8 @@ public class Game {
 
     public Game() {
         try {
-            arena = new Arena(80, 30);
-            TerminalSize terminalSize = new TerminalSize(80, 30);
+            arena = new Arena(80, 40);
+            TerminalSize terminalSize = new TerminalSize(80, 40);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
             screen = new TerminalScreen(terminal);
@@ -37,8 +37,19 @@ public class Game {
         screen.refresh();
     }
 
-    private void processKey(KeyStroke key) {
+    private void processKey(KeyStroke key) throws IOException {
         arena.processKey(key);
+        GameState();
+    }
+    private void GameState() throws IOException {
+        if (arena.energy == 0) {
+            System.out.println("Game over. Better luck next time.");
+            screen.close();
+        }
+        if (arena.gold == 10) {
+            System.out.println("Well done, you have won");
+            screen.close();
+        }
     }
 
     public void run() throws IOException {
