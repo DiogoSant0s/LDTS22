@@ -18,6 +18,7 @@ public class Arena {
     private Hero hero;
     public int energy = 10;
     public int gold = 0;
+    private int LastChance = 1;
 
     public Arena(int width, int height) {
         this.width = width;
@@ -110,7 +111,21 @@ public class Arena {
                 monsters.remove(monster);
                 System.out.print("You have ");
                 System.out.print(energy);
-                System.out.println(" remaining.");
+                System.out.println(" mana remaining.");
+                if (energy == 3 && LastChance == 1) {
+                    System.out.println("Be careful. You'll die if you reach zero.");
+                }
+                if (energy == 1 && LastChance == 1) {
+                    System.out.println("Giving you one last chance adventurer. Here, take this. It'll help you on your mission");
+                    energy += 5;
+                    LastChance--;
+                    System.out.print("You have ");
+                    System.out.print(energy);
+                    System.out.println(" mana remaining.");
+                }
+                else if (energy == 1 && LastChance == 0){
+                    System.out.println("I don't have any more healing items for you, my friend. One more hit and it's over.");
+                }
                 break;
             }
         }
@@ -132,7 +147,9 @@ public class Arena {
         }
     }
     public void processKey(KeyStroke key) {
-        if (monsters.isEmpty()) monsters = createMonsters();
+        if (monsters.isEmpty() && LastChance == 1) {
+            monsters = createMonsters();
+        }
         if (coins.isEmpty()) coins = createCoins();
         switch (key.getKeyType()) {
             case ArrowUp -> {
@@ -173,6 +190,9 @@ public class Arena {
     public void reset() {
         coins = createCoins();
         monsters = createMonsters();
+        LastChance = 1;
+        energy = 10;
+        gold = 0;
         hero = new Hero(40, 20);
     }
 }

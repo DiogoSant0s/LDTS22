@@ -12,12 +12,20 @@ public class Monster extends Element {
     public Position move() {
         Random random = new Random();
         switch (random.nextInt(4)) {
-            case 0 -> new Position(position.get_x(), position.get_y() - 1);
-            case 1 -> new Position(position.get_x(), position.get_y() + 1);
-            case 2 -> new Position(position.get_x() - 1, position.get_y());
-            case 3 -> new Position(position.get_x() + 1, position.get_y());
-        };
-        return this.getPosition();
+            case 0 -> {
+                return new Position(position.get_x(), position.get_y() - 1);
+            }
+            case 1 -> {
+                return new Position(position.get_x(), position.get_y() + 1);
+            }
+            case 2 -> {
+                return new Position(position.get_x() - 1, position.get_y());
+            }
+            case 3 -> {
+                return new Position(position.get_x() + 1, position.get_y());
+            }
+        }
+        return new Position(position.get_x(), position.get_y());
     }
     public void draw(TextGraphics graphics) {
         graphics.setForegroundColor(TextColor.Factory.fromString("#228B22"));
