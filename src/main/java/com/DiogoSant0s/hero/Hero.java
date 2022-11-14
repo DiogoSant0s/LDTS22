@@ -16,6 +16,4 @@ public class Hero extends Element {
         graphics.enableModifiers(SGR.BOLD);
         graphics.putString(new TerminalPosition(position.get_x(), position.get_y()), "X");
     }
-
-
 }

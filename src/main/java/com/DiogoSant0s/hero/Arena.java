@@ -130,7 +130,7 @@ public class Arena {
             }
         }
     }
-    private void moveHero(Position position) {
+    public void moveHero(Position position) {
         if (canHeroMove(position)) {
             hero.setPosition(position);
             retrieveCoins(position);

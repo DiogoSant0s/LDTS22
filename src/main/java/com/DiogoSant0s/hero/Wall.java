@@ -10,7 +10,6 @@ public class Wall extends Element{
     public Wall(int x, int y, String drawn) {
         super(x, y);
         this.drawn = drawn;}
-
     public void draw(TextGraphics graphics) {
         graphics.setForegroundColor(TextColor.Factory.fromString("#FF00FF"));
         graphics.enableModifiers(SGR.BOLD);

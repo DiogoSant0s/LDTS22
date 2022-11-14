@@ -11,24 +11,20 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
-    private Screen screen;
-    private Arena arena;
-    private TextGraphics graphics;
+    private final Screen screen;
+    private final Arena arena;
+    private final TextGraphics graphics;
 
-    public Game() {
-        try {
-            arena = new Arena(80, 40);
-            TerminalSize terminalSize = new TerminalSize(80, 40);
-            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-            Terminal terminal = terminalFactory.createTerminal();
-            screen = new TerminalScreen(terminal);
-            graphics = screen.newTextGraphics();
-            screen.setCursorPosition(null);
-            screen.startScreen();
-            screen.doResizeIfNecessary();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Game() throws IOException {
+        arena = new Arena(80, 40);
+        TerminalSize terminalSize = new TerminalSize(80, 40);
+        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+        Terminal terminal = terminalFactory.createTerminal();
+        screen = new TerminalScreen(terminal);
+        graphics = screen.newTextGraphics();
+        screen.setCursorPosition(null);
+        screen.startScreen();
+        screen.doResizeIfNecessary();
     }
 
     private void draw() throws IOException {
